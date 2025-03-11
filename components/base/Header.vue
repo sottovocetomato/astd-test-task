@@ -8,7 +8,7 @@
       flex
       justify-between
       items-center
-      lg:pr-[242px] lg:pl-10
+      lg:pr-[127px] lg:pl-10
       pr-4
       pl-4
       top-0

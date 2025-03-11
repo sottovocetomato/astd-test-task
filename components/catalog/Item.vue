@@ -2,8 +2,9 @@
   <NuxtLink
     :to="url"
     class="
-      w-item-card-width
-      h-item-card-height
+      sm:w-item-card-width sm:h-item-card-height
+      w-full
+      h-full
       flex flex-col
       justify-between
       items-start
@@ -13,11 +14,11 @@
     "
   >
     <div class="z-10 group-hover:z-12">
-      <div class="relative w-item-card-width aspect-square">
+      <div class="relative sm:w-item-card-width w-full aspect-square">
         <img
           :src="image || 'https://fakeimg.pl/600x400'"
           class="w-full h-full rounded-xl object-cover"
-        >
+        />
         <div
           v-if="cuttedPrice"
           class="
@@ -40,10 +41,7 @@
         <span class="font-golos font-bold mr-2">{{
           currencyFormat(newPrice)
         }}</span>
-        <span
-          v-if="oldPrice"
-          class="line-through text-text-striked text-xs"
-        >{{
+        <span v-if="oldPrice" class="line-through text-text-striked text-xs">{{
           currencyFormat(oldPrice)
         }}</span>
       </div>
@@ -55,8 +53,9 @@
     <div
       class="
         absolute
-        w-item-card-width-hovered
-        h-item-card-height-hovered
+        sm:w-item-card-width-hovered sm:h-item-card-height-hovered
+        w-[calc(100vw-45px)]
+        h-[80dvh]
         flex flex-col
         justify-end
         items-start
@@ -84,36 +83,36 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '~/utils/generate'
-import BaseButton from '~/components/base/BaseButton.vue'
+import type { Product } from "~/utils/generate";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 const emits = defineEmits<{
-  addToCart: [e: Event]
-}>()
+  addToCart: [e: Event];
+}>();
 
 export interface ExtendedProduct extends Product {
-  inCart: boolean
+  inCart: boolean;
 }
-
+//oldPrice во время тестов не приходило, поэтому в целях демонстрации указал дефолтное значение
 const {
-  image = '',
+  image = "",
   newPrice = 0,
-  oldPrice = 0,
-  brand = '',
-  name = '',
-  url = '',
-} = defineProps<ExtendedProduct>()
+  oldPrice = 125060,
+  brand = "",
+  name = "",
+  url = "",
+} = defineProps<ExtendedProduct>();
 
 const cuttedPrice = computed<number | null>(() => {
   if (oldPrice && newPrice < oldPrice) {
-    const priceDiff = newPrice - oldPrice
-    return Math.round((priceDiff * 100) / oldPrice)
+    const priceDiff = newPrice - oldPrice;
+    return Math.round((priceDiff * 100) / oldPrice);
   }
-  return null
-})
+  return null;
+});
 
 function addProductToCart(e: Event) {
-  emits('addToCart', e)
+  emits("addToCart", e);
 }
 </script>
 

@@ -7,6 +7,7 @@
         text-pink-custom text-h1
         underline
         hover:text-pink-500
+        underline-offset-6
       "
       >Перейти в раздел каталога</NuxtLink
     >
