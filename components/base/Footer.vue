@@ -18,7 +18,9 @@
       <a
         class="underline underline-offset-2"
         href="https://kazan.hh.ru/resume/a668a202ff08c172140039ed1f76376244536f"
-      >Айдар Ихсанов</a>
+        target="_blank"
+        >Айдар Ихсанов</a
+      >
     </div>
   </footer>
 </template>
