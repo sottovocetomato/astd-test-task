@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Product } from "#build/utils/generate";
+import type { ExtendedProduct } from "~/components/catalog/Item.vue";
 
 /**
  * Хранилище приложения для управления глобальными состояниями.
@@ -7,11 +7,25 @@ import type { Product } from "#build/utils/generate";
 export const useApplicationStore = defineStore("application", () => {
   const cart = ref([]);
 
-  function addToCart(product: Product) {
+  function addToCart(product: ExtendedProduct) {
+    if (!product) {
+      throw new Error("No product was provided");
+    }
+    if (product?.inCart === undefined) {
+      throw new Error("Given argument is not type of Product");
+    }
+    product.inCart = true;
     cart.value.push(product);
   }
-  function removeFromCart(link: string) {
-    cart.value = cart.value.filter((c) => c.url !== link);
+  function removeFromCart(product: ExtendedProduct) {
+    if (!product) {
+      throw new Error("No product was provided");
+    }
+    if (product?.inCart === undefined) {
+      throw new Error("Given argument is not type of Product");
+    }
+    product.inCart = false;
+    cart.value = cart.value.filter((c) => c.url !== product.url);
   }
 
   return {

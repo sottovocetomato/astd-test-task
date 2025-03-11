@@ -1,5 +1,5 @@
 <template>
-  <h2 class="mb-6">Тестовая задача</h2>
+  <h2 class="mb-6">Каталог товаров</h2>
   <div
     class="
       grid
@@ -16,15 +16,31 @@
       v-bind="product"
       :key="product.url"
       @addToCart="onProductAdd(product)"
-    ></CatalogItem>
+    >
+      <template #controls v-if="product.inCart">
+        <BaseButton @click.prevent="onProductRemove(product)" variant="danger">
+          Удалить
+        </BaseButton>
+      </template>
+    </CatalogItem>
   </div>
   <BaseNotification>
-    <span class="text-white"
-      >Товар добавлен в
-      <NuxtLink to="/cart" class="underline underline-offset-2"
-        >корзину</NuxtLink
-      >
-    </span>
+    <div v-if="variant === 'primary'">
+      <span class="text-white"
+        >Товар добавлен в
+        <NuxtLink to="/cart" class="underline underline-offset-2"
+          >корзину</NuxtLink
+        >
+      </span>
+    </div>
+    <div v-else>
+      <span class="text-white"
+        >Товар удалён из
+        <NuxtLink to="/cart" class="underline underline-offset-2"
+          >корзины</NuxtLink
+        >
+      </span>
+    </div>
   </BaseNotification>
 </template>
 
@@ -32,14 +48,16 @@
 import { apiPath } from "~/utils/api";
 import { useApplicationStore } from "~/store/application";
 import { useNotification } from "~/composables/useNotification";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 const store = useApplicationStore();
-const { addToCart } = store;
+const { addToCart, removeFromCart } = store;
 const nuxtApp = useNuxtApp();
-const { showNotification } = useNotification();
+const { showNotification, variant } = useNotification();
 
 const { data, error } = await useFetch(`${apiPath.catalog}/cosmetics`, {
   transform(resp) {
+    resp.products = resp?.products?.map((p) => ({ ...p, inCart: false }));
     return {
       ...resp,
       fetchedAt: new Date(),
@@ -60,11 +78,14 @@ const { data, error } = await useFetch(`${apiPath.catalog}/cosmetics`, {
     return data;
   },
 });
-console.log(data, "data");
 
 function onProductAdd(product) {
   addToCart(product);
-  showNotification();
+  showNotification("primary");
+}
+function onProductRemove(product) {
+  removeFromCart(product);
+  showNotification("danger");
 }
 </script>
 

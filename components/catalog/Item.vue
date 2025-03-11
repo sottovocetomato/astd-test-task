@@ -57,7 +57,7 @@
         flex flex-col
         justify-end
         items-start
-        shadow-2xl
+        shadow-custom
         opacity-0
         top:0
         translate-[-24px]
@@ -73,30 +73,24 @@
         group-hover:z-11
       "
     >
-      <button
-        @click.prevent="addProductToCart"
-        class="
-          bg-black
-          text-white
-          rounded-lg
-          py-2
-          px-5
-          mt-3
-          hover:bg-button-hover
-        "
-      >
-        В корзину
-      </button>
+      <slot name="controls">
+        <BaseButton @click.prevent="addProductToCart"> В корзину </BaseButton>
+      </slot>
     </div>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import type { Product } from "~/utils/generate";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 const emits = defineEmits<{
   addToCart: [e: Event];
 }>();
+
+export interface ExtendedProduct extends Product {
+  inCart: boolean;
+}
 
 const {
   image = "",
@@ -105,7 +99,8 @@ const {
   brand = "",
   name = "",
   url = "",
-} = defineProps<Product>();
+  inCart = false,
+} = defineProps<ExtendedProduct>();
 
 const cuttedPrice = computed<number | null>(() => {
   if (oldPrice && newPrice < oldPrice) {

@@ -3,26 +3,27 @@
     class="
       bg-white
       h-[92px]
-      shadow-xl
+      shadow-custom
       sticky
       flex
       justify-between
       items-center
-      xl:pr-[242px] xl:pl-10
-      sm:pr-4 sm:pl-4
+      lg:pr-[242px] lg:pl-10
+      pr-4
+      pl-4
       top-0
       z-20
     "
   >
     <NuxtLink to="/"><h2>Brand Name</h2></NuxtLink>
-    <div class="flex justify-between items-center">
+    <NuxtLink class="flex justify-between items-center" to="/cart">
       <Icon
         name="material-symbols:shopping-basket-outline"
         size="32px"
         class="mr-2"
       />
       <span class="min-w-24 text-right">{{ itemsInCart }} товаров</span>
-    </div>
+    </NuxtLink>
   </header>
 </template>
 

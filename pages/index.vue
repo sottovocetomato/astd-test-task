@@ -1,8 +1,8 @@
 <template>
-  <div class="h-full w-dvw flex items-center justify-center underline">
+  <div class="flex flex-1 items-center justify-center">
     <NuxtLink
       to="/catalog"
-      class="font-main font-medium text-pink-custom text-h1"
+      class="font-main font-medium text-pink-custom text-h1 underline"
       >Перейти в раздел каталога</NuxtLink
     >
   </div>

@@ -6,9 +6,10 @@
       flex
       justify-between
       items-center
-      xl:pr-[242px] xl:pl-10
       text-white
-      sm:pr-5 sm:pl-5
+      lg:pr-[242px] lg:pl-10
+      pr-4
+      pl-4
     "
   >
     <h2>Brand Name</h2>
@@ -16,7 +17,7 @@
       <p>Разработчик</p>
       <a
         class="underline underline-offset-2"
-        href="https://github.com/sottovocetomato"
+        href="https://kazan.hh.ru/resume/a668a202ff08c172140039ed1f76376244536f"
         >Айдар Ихсанов</a
       >
     </div>

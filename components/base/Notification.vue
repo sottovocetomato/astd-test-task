@@ -1,5 +1,5 @@
 <template>
-  <Transition name="notification" appear>
+  <Transition name="notification">
     <div
       class="
         p-6
@@ -9,6 +9,7 @@
         bottom-[132px]
         right-[40px]
         opacity-100
+        z-20
       "
       v-if="show"
     >
