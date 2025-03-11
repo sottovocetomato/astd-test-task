@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-    --font-sans: "Roboto", sans-serif;
+  --font-sans: "Roboto", sans-serif;
+  --font-main: "Inter", sans-serif;
+  --font-golos: "Golos Text", sans-serif;
+  --text-h1: 32px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --color-pink-custom: #e0119d;
+  --color-text-striked: #999999;
+  --spacing-items-gap: 30px;
+  --spacing-item-card-width: 201px;
+  --spacing-item-card-height: 286px;
+  --spacing-item-card-height-hovered: 386px;
+  --spacing-item-card-width-hovered: 249px;
+  --color-button-hover: color-mix(in srgb, black 80%, transparent);
+}
+
+body {
+  scrollbar-gutter: stable;
+  font-family: var(--font-main);
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+h2 {
+  font-size: var(--text-h2);
+}
+h3 {
+  font-size: var(--text-h3);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.notification-enter-active,
+.notification-leave-active {
+  transition: transform 0.3s ease-in-out, opacity 0.3s linear;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
+  transform: translateY(150%);
 }

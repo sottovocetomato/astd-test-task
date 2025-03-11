@@ -1,0 +1,123 @@
+<template>
+  <NuxtLink
+    :to="url"
+    class="
+      w-item-card-width
+      h-item-card-height
+      flex flex-col
+      justify-between
+      items-start
+      relative
+      group
+      hover:cursor-pointer
+    "
+  >
+    <div class="z-10 group-hover:z-12">
+      <div class="relative w-item-card-width aspect-square">
+        <img
+          :src="image || 'https://fakeimg.pl/600x400'"
+          class="w-full h-full rounded-xl object-cover"
+        />
+        <div
+          v-if="cuttedPrice"
+          class="
+            absolute
+            rounded-sm
+            h-[20px]
+            w-[40px]
+            bottom-[6px]
+            left-[6px]
+            bg-white
+            flex
+            items-center
+            justify-center
+          "
+        >
+          <span class="text-pink-custom text-xs">{{ cuttedPrice }}%</span>
+        </div>
+      </div>
+      <div class="mt-3">
+        <span class="font-golos font-bold mr-2">{{
+          currencyFormat(newPrice)
+        }}</span>
+        <span class="line-through text-text-striked text-xs" v-if="oldPrice">{{
+          currencyFormat(oldPrice)
+        }}</span>
+      </div>
+      <p class="font-golos font-semibold text-xs">{{ brand }}</p>
+      <p class="font-golos line-clamp-2 text-sm">
+        {{ name }}
+      </p>
+    </div>
+    <div
+      class="
+        absolute
+        w-item-card-width-hovered
+        h-item-card-height-hovered
+        flex flex-col
+        justify-end
+        items-start
+        shadow-2xl
+        opacity-0
+        top:0
+        translate-[-24px]
+        left:0
+        rounded-2xl
+        p-6
+        bg-white
+        transition-opacity
+        duration-200
+        group-hover:opacity-100
+        hover:cursor-pointer
+        z-9
+        group-hover:z-11
+      "
+    >
+      <button
+        @click.prevent="addProductToCart"
+        class="
+          bg-black
+          text-white
+          rounded-lg
+          py-2
+          px-5
+          mt-3
+          hover:bg-button-hover
+        "
+      >
+        В корзину
+      </button>
+    </div>
+  </NuxtLink>
+</template>
+
+<script setup lang="ts">
+import type { Product } from "~/utils/generate";
+
+const emits = defineEmits<{
+  addToCart: [e: Event];
+}>();
+
+const {
+  image = "",
+  newPrice = 0,
+  oldPrice = 0,
+  brand = "",
+  name = "",
+  url = "",
+} = defineProps<Product>();
+
+const cuttedPrice = computed<number | null>(() => {
+  if (oldPrice && newPrice < oldPrice) {
+    const priceDiff = newPrice - oldPrice;
+    return Math.round((priceDiff * 100) / oldPrice);
+  }
+  return null;
+});
+
+function addProductToCart(e) {
+  emits("addToCart", e);
+}
+</script>
+
+<style scoped></style>
