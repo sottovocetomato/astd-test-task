@@ -16,7 +16,10 @@
     "
   >
     <NuxtLink to="/"><h2>Brand Name</h2></NuxtLink>
-    <NuxtLink class="flex justify-between items-center" to="/cart">
+    <NuxtLink
+      class="flex justify-between items-center"
+      to="/cart"
+    >
       <Icon
         name="material-symbols:shopping-basket-outline"
         size="32px"
@@ -28,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { useApplicationStore } from "~/store/application";
+import { useApplicationStore } from '~/store/application'
 
-const store = useApplicationStore();
+const store = useApplicationStore()
 
-const itemsInCart = computed(() => store.cart.length);
+const itemsInCart = computed(() => store.cart.length)
 </script>
 
 <style scoped></style>

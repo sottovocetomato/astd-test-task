@@ -15,10 +15,10 @@
 
 <script setup lang="ts">
 export interface ButtonProps {
-  variant: "primary" | "danger";
+  variant?: 'primary' | 'danger'
 }
 
-const { variant = "primary" } = defineProps<ButtonProps>();
+const { variant = 'primary' } = defineProps<ButtonProps>()
 </script>
 
 <style scoped></style>

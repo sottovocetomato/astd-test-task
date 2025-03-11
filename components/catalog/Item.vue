@@ -17,7 +17,7 @@
         <img
           :src="image || 'https://fakeimg.pl/600x400'"
           class="w-full h-full rounded-xl object-cover"
-        />
+        >
         <div
           v-if="cuttedPrice"
           class="
@@ -40,7 +40,10 @@
         <span class="font-golos font-bold mr-2">{{
           currencyFormat(newPrice)
         }}</span>
-        <span class="line-through text-text-striked text-xs" v-if="oldPrice">{{
+        <span
+          v-if="oldPrice"
+          class="line-through text-text-striked text-xs"
+        >{{
           currencyFormat(oldPrice)
         }}</span>
       </div>
@@ -81,37 +84,36 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from "~/utils/generate";
-import BaseButton from "~/components/base/BaseButton.vue";
+import type { Product } from '~/utils/generate'
+import BaseButton from '~/components/base/BaseButton.vue'
 
 const emits = defineEmits<{
-  addToCart: [e: Event];
-}>();
+  addToCart: [e: Event]
+}>()
 
 export interface ExtendedProduct extends Product {
-  inCart: boolean;
+  inCart: boolean
 }
 
 const {
-  image = "",
+  image = '',
   newPrice = 0,
   oldPrice = 0,
-  brand = "",
-  name = "",
-  url = "",
-  inCart = false,
-} = defineProps<ExtendedProduct>();
+  brand = '',
+  name = '',
+  url = '',
+} = defineProps<ExtendedProduct>()
 
 const cuttedPrice = computed<number | null>(() => {
   if (oldPrice && newPrice < oldPrice) {
-    const priceDiff = newPrice - oldPrice;
-    return Math.round((priceDiff * 100) / oldPrice);
+    const priceDiff = newPrice - oldPrice
+    return Math.round((priceDiff * 100) / oldPrice)
   }
-  return null;
-});
+  return null
+})
 
-function addProductToCart(e) {
-  emits("addToCart", e);
+function addProductToCart(e: Event) {
+  emits('addToCart', e)
 }
 </script>
 

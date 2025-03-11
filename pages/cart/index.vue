@@ -1,5 +1,7 @@
 <template>
-  <h2 class="mb-6">Корзина</h2>
+  <h2 class="mb-6">
+    Корзина
+  </h2>
   <div
     class="
       grid
@@ -11,9 +13,16 @@
       gap-items-gap
     "
   >
-    <CatalogItem v-for="product in cart" v-bind="product" :key="product.url">
+    <CatalogItem
+      v-for="product in cart"
+      v-bind="product"
+      :key="product.url"
+    >
       <template #controls>
-        <BaseButton @click.prevent="onProductRemove(product)" variant="danger">
+        <BaseButton
+          variant="danger"
+          @click.prevent="onProductRemove(product)"
+        >
           Удалить
         </BaseButton>
       </template>
@@ -25,17 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import { useNotification } from "~/composables/useNotification";
-import { useApplicationStore } from "~/store/application";
-import BaseButton from "~/components/base/BaseButton.vue";
-const { showNotification } = useNotification();
-const store = useApplicationStore();
-const { removeFromCart } = store;
-const cart = computed(() => store.cart);
+import { useNotification } from '~/composables/useNotification'
+import { useApplicationStore } from '~/store/application'
+import BaseButton from '~/components/base/BaseButton.vue'
+import type { ExtendedProduct } from '~/components/catalog/Item.vue'
 
-function onProductRemove(product) {
-  removeFromCart(product);
-  showNotification();
+const { showNotification } = useNotification()
+const store = useApplicationStore()
+const { removeFromCart } = store
+const cart = computed(() => store.cart)
+
+function onProductRemove(product: ExtendedProduct) {
+  removeFromCart(product)
+  showNotification('primary')
 }
 </script>
 

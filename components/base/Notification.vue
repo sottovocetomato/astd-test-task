@@ -1,6 +1,7 @@
 <template>
   <Transition name="notification">
     <div
+      v-if="show"
       class="
         p-6
         bg-pink-custom
@@ -11,7 +12,6 @@
         opacity-100
         z-20
       "
-      v-if="show"
     >
       <slot />
     </div>
@@ -19,8 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { useNotification } from "~/composables/useNotification";
-const { show } = useNotification();
+import { useNotification } from '~/composables/useNotification'
+
+const { show } = useNotification()
 </script>
 
 <style scoped></style>

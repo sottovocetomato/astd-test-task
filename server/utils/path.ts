@@ -1,3 +1,3 @@
-import { path as clientPath } from "~/utils/path";
+import { path as clientPath } from '~/utils/path'
 
-export const path = clientPath;
+export const path = clientPath

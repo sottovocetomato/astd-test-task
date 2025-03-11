@@ -1,5 +1,7 @@
 <template>
-  <h2 class="mb-6">Каталог товаров</h2>
+  <h2 class="mb-6">
+    Каталог товаров
+  </h2>
   <div
     class="
       grid
@@ -12,13 +14,19 @@
     "
   >
     <CatalogItem
-      v-for="product in data.products"
+      v-for="product in data?.products"
       v-bind="product"
       :key="product.url"
-      @addToCart="onProductAdd(product)"
+      @add-to-cart="onProductAdd(product)"
     >
-      <template #controls v-if="product.inCart">
-        <BaseButton @click.prevent="onProductRemove(product)" variant="danger">
+      <template
+        v-if="product.inCart"
+        #controls
+      >
+        <BaseButton
+          variant="danger"
+          @click.prevent="onProductRemove(product)"
+        >
           Удалить
         </BaseButton>
       </template>
@@ -26,66 +34,69 @@
   </div>
   <BaseNotification>
     <div v-if="variant === 'primary'">
-      <span class="text-white"
-        >Товар добавлен в
-        <NuxtLink to="/cart" class="underline underline-offset-2"
-          >корзину</NuxtLink
-        >
+      <span class="text-white">Товар добавлен в
+        <NuxtLink
+          to="/cart"
+          class="underline underline-offset-2"
+        >корзину</NuxtLink>
       </span>
     </div>
     <div v-else>
-      <span class="text-white"
-        >Товар удалён из
-        <NuxtLink to="/cart" class="underline underline-offset-2"
-          >корзины</NuxtLink
-        >
+      <span class="text-white">Товар удалён из
+        <NuxtLink
+          to="/cart"
+          class="underline underline-offset-2"
+        >корзины</NuxtLink>
       </span>
     </div>
   </BaseNotification>
 </template>
 
 <script setup lang="ts">
-import { apiPath } from "~/utils/api";
-import { useApplicationStore } from "~/store/application";
-import { useNotification } from "~/composables/useNotification";
-import BaseButton from "~/components/base/BaseButton.vue";
+import { apiPath } from '~/utils/api'
+import { useApplicationStore } from '~/store/application'
+import { useNotification } from '~/composables/useNotification'
+import BaseButton from '~/components/base/BaseButton.vue'
+import type { ExtendedProduct } from '~/components/catalog/Item.vue'
 
-const store = useApplicationStore();
-const { addToCart, removeFromCart } = store;
-const nuxtApp = useNuxtApp();
-const { showNotification, variant } = useNotification();
+type ResponseObj = { products: ExtendedProduct[] }
 
-const { data, error } = await useFetch(`${apiPath.catalog}/cosmetics`, {
+const store = useApplicationStore()
+const { addToCart, removeFromCart } = store
+const nuxtApp = useNuxtApp()
+const { showNotification, variant } = useNotification()
+
+const { data } = await useFetch<ResponseObj>(`${apiPath.catalog}/cosmetics`, {
   transform(resp) {
-    resp.products = resp?.products?.map((p) => ({ ...p, inCart: false }));
+    resp.products = resp?.products?.map(p => ({ ...p, inCart: false }))
     return {
       ...resp,
       fetchedAt: new Date(),
-    };
+    }
   },
   getCachedData(key) {
-    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key];
+    const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
     if (!data) {
-      return;
+      return
     }
 
-    const expireAt = new Date(data.fetchedAt);
-    expireAt.setTime(expireAt.getTime() + 600 * 1000);
-    const expired = expireAt.getTime() < Date.now();
+    const expireAt = new Date(data.fetchedAt)
+    expireAt.setTime(expireAt.getTime() + 600 * 1000)
+    const expired = expireAt.getTime() < Date.now()
     if (expired) {
-      return;
+      return
     }
-    return data;
+    return data
   },
-});
+})
 
-function onProductAdd(product) {
-  addToCart(product);
-  showNotification("primary");
+function onProductAdd(product: ExtendedProduct) {
+  addToCart(product)
+  showNotification('primary')
 }
-function onProductRemove(product) {
-  removeFromCart(product);
-  showNotification("danger");
+function onProductRemove(product: ExtendedProduct) {
+  removeFromCart(product)
+  showNotification('danger')
 }
 </script>
 

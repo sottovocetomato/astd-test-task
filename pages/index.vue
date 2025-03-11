@@ -3,8 +3,7 @@
     <NuxtLink
       to="/catalog"
       class="font-main font-medium text-pink-custom text-h1 underline"
-      >Перейти в раздел каталога</NuxtLink
-    >
+    >Перейти в раздел каталога</NuxtLink>
   </div>
 </template>
 
