@@ -2,6 +2,7 @@
   <h2 class="mb-6">Каталог товаров</h2>
   <div
     class="
+      relative
       grid
       xl:grid-cols-6
       lg:grid-cols-4
